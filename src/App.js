@@ -28,9 +28,7 @@ class App extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Submitting the File...");
-
-    this.setState({ loading: "Please wait while image is uploading....." });
+    this.setState({ loading: "Image upload is in progress....." });
     
     var hash = "";
     for await (const result of await ipfs.add(this.state.buffer)) {
@@ -43,37 +41,34 @@ class App extends Component {
   render() {
     return (
       <div className="Container">
-        <nav className="navbar navbar-light bg-light">
-          <h1 className="navbar-brand mb-0 h1 text-center">IPFS File Upload</h1>
+          <h1>IPFS File Upload</h1>
         </nav>
-        <main role="main" className="inner cover mx-sm-3 mb-2 ">
+        <main>
           {this.state.storageValue !== "" ? (
             <img
               src={`https://ipfs.io/ipfs/${this.state.storageValue}`}
-              alt="No-images"
+              alt="Image not available"
             />
           ) : (
             <i>There is no image</i>
           )}
           <p>{this.state.loading === "" ? "" : this.state.loading}</p>
 
-          <div className="card">
-            <div className="card-body">
+          <div>
+            <div">
               <form onSubmit={this.onSubmit} className="form-inline mTop">
                 <input
                   type="file"
-                  className="form-control no-border"
                   onChange={this.captureFile}
                 />
                 <input
                   type="submit"
-                  className="btn mx-sm-3 btn-primary bnt-sm form-control"
                 />
               </form>
               <p>
-                This is image hash:{" "}
+                TImage hash:{" "}
                 {this.state.storageValue === "" ? (
-                  <i>Please Upload the image to see the hash</i>
+                  <i>Please Upload the image </i>
                 ) : (
                   this.state.storageValue
                 )}
